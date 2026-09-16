@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Code Intelligence — Legacy code in. Sized, running, rebuilt out.</title>
+    <meta
+      name="description"
+      content="Point Code Intelligence at a codebase nobody can size and nobody can run. It scans the tree, prices the work in Use Case Points, boots the app in containers, and rebuilds it on a modern stack."
+    />
+    <meta property="og:title" content="Code Intelligence" />
+    <meta property="og:description" content="Legacy code in. Sized, running, rebuilt out." />
+    <meta property="og:type" content="website" />
+    <script>
+      /* Apply the saved theme before first paint, so a dark-mode visitor never
+         sees a white flash. ThemeContext re-applies on mount; a failure here is
+         cosmetic, not fatal. */
+      try {
+        var t = localStorage.getItem("cc_theme");
+        if (!t) t = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

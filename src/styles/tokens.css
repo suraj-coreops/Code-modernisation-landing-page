@@ -1,0 +1,186 @@
+/* ============================================================
+   Code Intelligence — design tokens
+   Same token vocabulary as the CoreSight design sheet (--cs-*),
+   retargeted to this console's emerald/teal identity.
+
+   Light is the bare :root palette. Dark redefines ONLY the values,
+   under both an explicit [data-theme="dark"] and the system
+   preference, so a colour never has its only definition inside a
+   conditional block.
+   ============================================================ */
+
+:root {
+  /* HSL triplets — used bare inside hsl(var(--x) / alpha) */
+  --primary: 221 83% 53%;      /* brand blue  #2563eb */
+  --accent-2: 252 100% 68%;    /* violet   #7c5cff */
+  --accent-3: 189 71% 47%;     /* cyan     #22b8cf */
+  --background: 0 0% 100%;
+
+  --cs-color-brand: hsl(var(--primary));
+  --cs-color-brand-hover: hsl(221 83% 45%);
+  --cs-color-brand-subtle: hsl(var(--primary) / 0.09);
+  --cs-color-brand-subtle-md: hsl(var(--primary) / 0.18);
+  --cs-color-success: #16a34a;
+  --cs-color-success-text: #15803d;
+  --cs-color-warn: #c2600a;
+  --cs-color-danger: #dc2626;
+  --cs-color-info: #2563eb;
+
+  --cs-surface-page: #ffffff;
+  --cs-surface-card: #ffffff;
+  --cs-surface-muted: #f6f7f9;
+  --cs-surface-sunken: #fafafa;
+  --cs-surface-term: #0b0d10;
+
+  --cs-border: #e4e6ea;
+  --cs-border-subtle: #eef0f3;
+  --cs-border-term: rgba(255, 255, 255, 0.1);
+
+  --cs-text-base: #0a0a0a;
+  --cs-text-muted: #5f6570;
+  --cs-text-subtle: #8b919c;
+  --cs-text-on-brand: #ffffff;
+
+  --cs-font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --cs-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+  --cs-text-xs: 0.75rem;
+  --cs-text-sm: 0.8125rem;
+  --cs-text-base-sz: 0.9375rem;
+  --cs-text-lg: 1.0625rem;
+  --cs-text-xl: 1.3rem;
+  --cs-text-2xl: 1.7rem;
+  --cs-text-3xl: 2.1rem;
+
+  --cs-space-1: 4px;
+  --cs-space-2: 8px;
+  --cs-space-3: 12px;
+  --cs-space-4: 16px;
+  --cs-space-5: 20px;
+  --cs-space-6: 24px;
+  --cs-space-8: 36px;
+
+  --cs-radius: 8px;
+  --cs-radius-md: 10px;
+  --cs-radius-lg: 14px;
+  --cs-radius-xl: 18px;
+  --cs-radius-full: 999px;
+
+  --cs-shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --cs-shadow-sm: 0 2px 6px rgba(15, 23, 42, 0.07);
+  --cs-shadow-md: 0 10px 28px rgba(15, 23, 42, 0.1);
+
+  --cs-transition-fast: 0.15s ease;
+  --cs-transition-base: 0.25s ease;
+  --cs-transition-slow: 0.4s ease;
+}
+
+/* Dark — values only, never new properties.
+
+   Only the explicit attribute is needed: the boot script in index.html always
+   stamps data-theme (falling back to the system preference when nothing is
+   stored), so there is no third "unset" state for a media query to cover, and
+   adding one would give every colour a second place to drift from. */
+:root[data-theme="dark"] {
+  --background: 0 0% 4%;
+  --primary: 217 91% 66%;      /* lifted for dark grounds  #56a0f8 */
+  --cs-color-brand-hover: hsl(217 91% 74%);
+  --cs-color-brand-subtle: hsl(var(--primary) / 0.12);
+  --cs-color-brand-subtle-md: hsl(var(--primary) / 0.22);
+  --cs-color-success: #22c55e;
+  --cs-color-success-text: #4ade80;
+  --cs-color-warn: #f59e0b;
+  --cs-color-danger: #ef4444;
+  --cs-color-info: #60a5fa;
+
+  --cs-surface-page: #0a0a0a;
+  --cs-surface-card: #141414;
+  --cs-surface-muted: #171717;
+  --cs-surface-sunken: #0d0d0d;
+  --cs-surface-term: #050505;
+
+  --cs-border: rgba(255, 255, 255, 0.1);
+  --cs-border-subtle: rgba(255, 255, 255, 0.06);
+
+  --cs-text-base: #fafafa;
+  --cs-text-muted: #a1a1a1;
+  --cs-text-subtle: #737373;
+  --cs-text-on-brand: #061321;
+
+  --cs-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --cs-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.45);
+  --cs-shadow-md: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Reset + base ───────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--cs-surface-page);
+  color: var(--cs-text-base);
+  font-family: var(--cs-font-family);
+  font-size: var(--cs-text-base-sz);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+  letter-spacing: -0.015em;
+}
+
+p { margin: 0; }
+
+a { color: inherit; }
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+code, pre, .mono {
+  font-family: var(--cs-font-mono);
+}
+
+::selection {
+  background: hsl(var(--primary) / 0.28);
+}
+
+/* Scrollbars, so panes inside the console don't fall back to the OS
+   default and break the surface colour. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--primary) / 0.3) transparent;
+}
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.25);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover { background-clip: content-box; background-color: hsl(var(--primary) / 0.45); }
+
+/* Anything chrome-like that Agent Core already draws around us. */
+:root.framed .framed-hide { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
