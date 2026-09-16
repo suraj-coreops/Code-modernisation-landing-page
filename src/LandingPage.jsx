@@ -36,6 +36,10 @@ const CONSOLE_PATHS = {
   "/jobs": "/jobs",
   "/artifacts": "/artifacts",
   "/pricing": "/ucp-pricing",
+  // Below this line: reachable, but NOT linked from this page on purpose. The
+  // three build skills require a signed-in user, and Settings and LLM Agents are
+  // hidden entirely in demo deployments. Kept here so the table stays a complete
+  // record of the console's routes for whoever adds a link next.
   "/revive": "/build/revive",
   "/pixel-clone": "/build/pixel-clone",
   "/legacy-transform": "/build/legacy-transform",
@@ -231,9 +235,6 @@ export default function LandingPage() {
           <button type="button" className="iconbtn" onClick={toggle} title="Toggle light / dark">
             {theme === "light" ? "☀" : "☾"}
           </button>
-          <a href={consoleHref("/jobs")} className="lp-navlogin">
-            Jobs
-          </a>
           <a href={consoleHref("/")} className="lp-btn sm">
             Open console
           </a>
@@ -596,43 +597,37 @@ export default function LandingPage() {
             </div>
 
             <div className="lp-footer-col">
-              <h4>Console</h4>
+              <h4>Explore</h4>
               <ul>
-                <li>
-                  <a href={consoleHref("/")}>Dashboard</a>
-                </li>
-                <li>
-                  <a href={consoleHref("/ingest")}>New ingest</a>
-                </li>
-                <li>
-                  <a href={consoleHref("/jobs")}>Jobs</a>
-                </li>
-                <li>
-                  <a href={consoleHref("/agents")}>LLM Agents</a>
-                </li>
-                <li>
-                  <a href={consoleHref("/settings")}>Settings</a>
-                </li>
+                {NAV_SECTIONS.map((sec) => (
+                  <li key={sec.id}>
+                    <button type="button" onClick={() => scrollToSection(sec.id)}>
+                      {sec.label}
+                    </button>
+                  </li>
+                ))}
               </ul>
             </div>
 
+            {/* Only pages an anonymous visitor can actually use. The build
+                skills (Revive, Pixel-Clone, Legacy Transform) sit behind a
+                sign-in, and Settings and LLM Agents are hidden outright in demo
+                deployments -- linking a marketing page straight at any of those
+                sends a first-time reader to a login wall or an empty screen. */}
             <div className="lp-footer-col">
-              <h4>Pipeline</h4>
+              <h4>Console</h4>
               <ul>
+                <li>
+                  <a href={consoleHref("/")}>Open console</a>
+                </li>
+                <li>
+                  <a href={consoleHref("/ingest")}>Start an ingest</a>
+                </li>
                 <li>
                   <a href={consoleHref("/artifacts")}>Artifacts</a>
                 </li>
                 <li>
                   <a href={consoleHref("/pricing")}>UCP &amp; Pricing</a>
-                </li>
-                <li>
-                  <a href={consoleHref("/revive")}>Revive</a>
-                </li>
-                <li>
-                  <a href={consoleHref("/pixel-clone")}>UI Pixel-Clone</a>
-                </li>
-                <li>
-                  <a href={consoleHref("/legacy-transform")}>Legacy Transform</a>
                 </li>
               </ul>
             </div>
