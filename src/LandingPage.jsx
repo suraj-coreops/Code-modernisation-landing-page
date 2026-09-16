@@ -15,11 +15,17 @@ import { useTheme } from "./context/ThemeContext";
 
 /** Where the Code Intelligence console is deployed.
  *
- *  Set VITE_CONSOLE_URL at build time (see .env.example). The fallback is the
- *  local development server, so a fresh clone with no configuration still runs
- *  and the button still goes somewhere sensible rather than nowhere.
+ *  The production address is the DEFAULT, not something a deploy has to
+ *  remember to pass. Getting it wrong is invisible -- the page renders
+ *  perfectly and every button quietly points at the visitor's own machine --
+ *  so the safe value is the one that applies when nobody configures anything.
+ *
+ *  VITE_CONSOLE_URL overrides it at build time, for pointing a local build or a
+ *  staging site somewhere else. See .env.example.
  */
-const CONSOLE_URL = (import.meta.env.VITE_CONSOLE_URL || "http://localhost:8765").replace(/[/]+$/, "");
+const CONSOLE_URL = (
+  import.meta.env.VITE_CONSOLE_URL || "https://code-modernisation.coreops.ai"
+).replace(/[/]+$/, "");
 
 /** The console's own route names.
  *

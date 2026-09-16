@@ -17,23 +17,27 @@ serves static files.
 
 ---
 
-## Point it at your console
+## Where the buttons go
 
-One setting decides where every link goes.
+Every link on the page points at the console:
+
+```
+https://code-modernisation.coreops.ai
+```
+
+That address is the **default**, compiled into the build. A normal deploy needs
+no configuration for it — build the site and the links are already correct.
+
+To aim a build somewhere else (a console on your own machine, or a staging
+environment), set `VITE_CONSOLE_URL`:
 
 ```bash
 cp .env.example .env
+# then uncomment and edit the line inside
 ```
 
-Then edit `.env`:
-
-```ini
-VITE_CONSOLE_URL=https://code-console.your-domain.com
-```
-
-**This is read when the site is built, not when it runs.** Vite writes the value
-directly into the JavaScript, so changing it means building again. Every deploy
-recipe below sets it before `npm run build` for that reason.
+**It is read when the site is built, not when it runs.** Vite writes the value
+into the JavaScript, so changing it means running `npm run build` again.
 
 ---
 
@@ -62,14 +66,18 @@ runtime.
 | --- | --- |
 | Build command | `npm run build` |
 | Publish directory | `dist` |
-| Environment variable | `VITE_CONSOLE_URL` = your console's URL |
+| Node version | 20 or newer |
+| Environment variables | none required |
 
 ### Docker
 
 ```bash
-docker build --build-arg VITE_CONSOLE_URL=https://code-console.your-domain.com -t ci-landing .
+docker build -t ci-landing .
 docker run -p 8080:80 ci-landing
 ```
+
+Add `--build-arg VITE_CONSOLE_URL=...` only if this image should point at a
+console other than production.
 
 The image is nginx serving the built files. No Node, no source, ~50 MB.
 
@@ -120,7 +128,8 @@ The brand colour is one line:
 Light values sit in `:root`; the dark overrides are further down in the same
 file. Don't write a colour anywhere else — that's how themes drift apart.
 
-**Change where the buttons go.** `VITE_CONSOLE_URL` sets the host. The page
+**Change where the buttons go.** The default host is compiled into
+`src/LandingPage.jsx`; `VITE_CONSOLE_URL` overrides it per build. The page
 also deep-links to a few console pages (Ingest, Jobs, Revive…), and those paths
 are listed in one table, `CONSOLE_PATHS`, at the top of `src/LandingPage.jsx`.
 They match the console's own routes — if a route is renamed there, update it
